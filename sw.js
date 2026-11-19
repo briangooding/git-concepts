@@ -1,5 +1,5 @@
 // Offline support: the app's own files are cached on install; fonts are cached the first time they load.
-const VERSION = "gfg-v1";
+const VERSION = "gfg-v2";
 const SHELL = ["./", "index.html", "css/styles.css", "js/app.js", "js/sandbox.js", "manifest.webmanifest", "icons/icon.svg", "icons/icon-192.png"];
 
 self.addEventListener("install", e => {
