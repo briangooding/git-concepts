@@ -161,14 +161,14 @@ tr:last-child td{border-bottom:0}
 .rbr{display:grid;gap:4px;font:.82rem var(--f-mono)}
 .rbr div{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;background:var(--sunk);border-radius:6px;flex-wrap:wrap}
 .tasks{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
-.tasks ol{margin:8px 0 0;padding-left:0;list-style:none;display:grid;gap:6px;counter-reset:tk}
-.tasks li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;font-size:.92rem;counter-increment:tk;max-width:none}
-.tasks li .ck{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:.7rem;color:var(--muted);margin-top:2px}
-.tasks li .ck::before{content:counter(tk)}
-.tasks li.done .ck{background:var(--accent);border-color:var(--accent);color:var(--surface)}
-.tasks li.done .ck::before{content:"✓"}
-.tasks li.done .tx{color:var(--muted);text-decoration:line-through}
-.tasks li.next .tx{font-weight:600}
+#tasks{margin:8px 0 0;padding-left:0;list-style:none;display:grid;gap:6px;counter-reset:tk}
+#tasks > li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;font-size:.92rem;counter-increment:tk;max-width:none}
+#tasks > li .ck{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:.7rem;color:var(--muted);margin-top:2px}
+#tasks > li .ck::before{content:counter(tk)}
+#tasks > li.done .ck{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+#tasks > li.done .ck::before{content:"✓"}
+#tasks > li.done .tt{color:var(--muted);text-decoration:line-through}
+#tasks > li.next .tt{font-weight:600}
 .tasks .hint{display:inline-block;margin-left:6px;font:500 .78rem var(--f-mono);background:var(--sunk);border:1px solid var(--line);color:var(--accent);border-radius:5px;padding:1px 7px;cursor:pointer}
 
 /* mobile */
@@ -193,3 +193,13 @@ tr:last-child td{border-bottom:0}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%}
 [hidden]{display:none!important}
+.howto{margin-top:8px;border:1px solid var(--line);border-radius:9px;background:var(--bg);padding:2px 12px}
+.howto summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0;width:max-content;max-width:100%}
+.howto[open] summary{border-bottom:1px solid var(--line);margin-bottom:6px;width:auto}
+.howto p{margin:6px 0;font-size:.9rem}
+.howto ol{list-style:decimal;padding-left:22px;margin:6px 0;gap:8px;counter-reset:none}
+.howto ol li{display:list-item;font-size:.9rem}
+.howto .cmds{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.howto .cmds .hint{margin-left:0}
+.howto .stuck{color:var(--muted)}
+#tasks > li.done .howto{opacity:.75}

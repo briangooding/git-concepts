@@ -515,15 +515,42 @@ const TASKS = [
   ["Connect GitHub as a remote", `git remote add origin ${REMOTE_URL}`, () => !!st.remote],
   ["Push main to GitHub", "git push -u origin main", () => !!(st.remote && st.remote.branches.main)],
   ["Click “Simulate a teammate pushing,” then pull their work", "git pull", () => st.flags.pulled],
-  ["Bonus: cause and resolve a merge conflict (edit the same line on two branches)", "git log --oneline --all", () => st.flags.conflict && st.flags.resolved],
+  ["Bonus: cause and resolve a merge conflict", null, () => st.flags.conflict && st.flags.resolved, null, {
+    why: "A conflict happens when two branches change the same lines in different ways. Git can't choose for you, so it stops and asks. Here you'll set one up on purpose.",
+    steps: [
+      ["Start on main with everything committed. git status should say “working tree clean.”", ["git switch main", "git status"]],
+      ["Create a branch for one version of the change.", ["git switch -c oat-milk"]],
+      ["On that branch, replace the file's text and commit. The > overwrites the whole file, so the same lines change.", ['echo "Buy oat milk" > notes.txt', 'git commit -am "Switch to oat milk"']],
+      ["Go back to main.", ["git switch main"]],
+      ["Change the same lines in a different way on main, and commit.", ['echo "Buy whole milk" > notes.txt', 'git commit -am "Switch to whole milk"']],
+      ["Merge the branch. You'll get a CONFLICT, and notes.txt shows a red “conflict” badge in Working directory.", ["git merge oat-milk"]],
+      ["Click notes.txt in the Working directory panel. Delete the <<<<<<<, ======= and >>>>>>> lines, keep the text you want, then click Save file.", ["cat notes.txt"]],
+      ["Mark the file as resolved and finish the merge.", ["git add notes.txt", 'git commit -m "Merge oat-milk"']],
+      ["Look at the result: a merge commit with two parents.", ["git log --oneline --all"]],
+    ],
+    stuck: "Stuck partway through? git merge --abort cancels the merge and puts your files back. Reset sandbox (top of the terminal) starts over completely.",
+  }],
 ];
+let openHelp = new Set();
 function renderTasks(){
   let nextSet = false;
-  $("#tasks").innerHTML = TASKS.map(([t, cmd, ok, cmd2]) => {
+  const hint = c => `<button class="hint" type="button" data-cmd="${esc(c)}">${esc(c)}</button>`;
+  $("#tasks").innerHTML = TASKS.map(([t, cmd, ok, cmd2, help], i) => {
     const d = ok(); let cls = d ? "done" : ""; if (!d && !nextSet){ cls = "next"; nextSet = true; }
-    return `<li class="${cls}"><span class="ck" aria-hidden="true"></span><span class="tx">${esc(t)} <button class="hint" data-cmd="${esc(cmd)}">${esc(cmd)}</button>${cmd2 ? ` <button class="hint" data-cmd="${esc(cmd2)}">${esc(cmd2)}</button>` : ""}</span></li>`;
+    let extra = "";
+    if (help){
+      extra = `<details class="howto" data-i="${i}"${openHelp.has(i) ? " open" : ""}><summary>Show me how</summary>
+        <p>${esc(help.why)}</p>
+        <ol>${help.steps.map(([txt, cmds]) => `<li>${esc(txt)}<span class="cmds">${cmds.map(hint).join("")}</span></li>`).join("")}</ol>
+        <p class="stuck">${esc(help.stuck)} ${hint("git merge --abort")}</p></details>`;
+    }
+    return `<li class="${cls}"><span class="ck" aria-hidden="true"></span><span class="tx"><span class="tt">${esc(t)}</span>${cmd ? " " + hint(cmd) : ""}${cmd2 ? " " + hint(cmd2) : ""}${extra}</span></li>`;
   }).join("");
 }
+$("#tasks").addEventListener("toggle", e => {
+  const dt = e.target; if (!dt.matches || !dt.matches("details.howto")) return;
+  const i = +dt.dataset.i; dt.open ? openHelp.add(i) : openHelp.delete(i);
+}, true);
 document.addEventListener("click", e => { const h = e.target.closest(".hint"); if (!h) return; const i = $("#sbIn"); i.value = h.dataset.cmd; i.focus(); });
 
 // history + submit
