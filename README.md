@@ -20,7 +20,6 @@ js/app.js              navigation, glossary popovers, progress tracking
 js/sandbox.js          the simulated Git used in the Sandbox chapter
 sw.js                  service worker for offline use
 manifest.webmanifest   app name and icons for installing
-.github/workflows/     deploys to GitHub Pages on every push to main
 ```
 
 No build step and no dependencies. To run it locally:
@@ -33,4 +32,4 @@ Then open http://localhost:8000. Opening `index.html` directly also works, but o
 
 ## Deployment
 
-Every push to `main` deploys automatically through GitHub Actions. One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+GitHub Pages serves the `main` branch (**Settings → Pages → Deploy from a branch → main, / (root)**). Every push to `main` updates the live site within a minute or two.
