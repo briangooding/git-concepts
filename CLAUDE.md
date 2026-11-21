@@ -9,6 +9,7 @@
 
 Git Field Guide: a static web app for learning Git and GitHub, with step-by-step lessons, a clickable glossary and a simulated Git terminal (the "Sandbox").
 
+- **Audience: Windows users only.** Explain everything for Windows 10/11 with Git for Windows, and use Git Bash as the terminal so commands like `ls`, `pwd` and `echo "text" > file` work as shown. Don't add Mac or Linux instructions. Use Windows paths and UI (File Explorer, Credential Manager, winget in PowerShell).
 - Live site: https://briangooding.github.io/git-concepts/
 - Hosting: GitHub Pages, deployed from a branch (`main`, `/ (root)`). Every push to `main` goes live in a minute or two. No Actions workflow is needed. Don't add one, because it would compete with the branch deploy.
 - No build step and no dependencies. Plain HTML, CSS and JS.

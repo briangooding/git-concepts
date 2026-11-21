@@ -76,7 +76,7 @@ function shell(a, line){
   if (cmd === "help") return print(HELP, "d");
   if (cmd === "clear") { out.innerHTML = ""; return; }
   if (cmd === "ls"){ const f = Object.keys(st.files).sort(); if (a.includes("-a") && st.inited) f.unshift(".git"); return f.length && print(f.join("  ")); }
-  if (cmd === "pwd") return print("/home/you/project");
+  if (cmd === "pwd") return print("/c/Users/you/project");
   if (cmd === "cat"){ if (!a[1]) throw Error("cat: which file?"); if (!(a[1] in st.files)) throw Error(`cat: ${a[1]}: No such file or directory`); return print(st.files[a[1]].replace(/\n$/,"")); }
   if (cmd === "touch"){ if (!a[1]) throw Error("touch: missing file name"); for (const f of a.slice(1)) if (!(f in st.files)) st.files[f] = ""; return; }
   if (cmd === "rm"){ if (!a[1]) throw Error("rm: missing file name"); if (!(a[1] in st.files)) throw Error(`rm: ${a[1]}: No such file or directory`); delete st.files[a[1]]; return; }
@@ -88,7 +88,8 @@ function shell(a, line){
     st.files[f] = a[op] === ">" ? text + "\n" : (st.files[f] || "") + text + "\n";
     return;
   }
-  if (["cd","mkdir","nano","vim","code"].includes(cmd)) return print(`The sandbox is a single folder, so '${cmd}' isn't needed here. Edit files by clicking them on the right, or with echo.`, "d");
+  if (cmd === "winget" || cmd === "gh") return print(`'${cmd}' runs on your real PC (winget in PowerShell). There's nothing to install in the sandbox: Git is already here.`, "d");
+  if (["cd","mkdir","nano","vim","code","notepad","explorer","start"].includes(cmd)) return print(`The sandbox is a single folder, so '${cmd}' isn't needed here. Edit files by clicking them on the right, or with echo.`, "d");
   throw Error(`${cmd}: command not found. Type 'help' to see what the sandbox understands.`);
 }
 
@@ -97,10 +98,10 @@ function needRepo(){ if (!st.inited) throw Error("fatal: not a git repository (o
 function git(a){
   const sub = a[0], rest = a.slice(1);
   if (!sub || sub === "help") return print(HELP, "d");
-  if (sub === "--version") return print("git version 2.47.1 (sandbox)");
+  if (sub === "--version") return print("git version 2.47.1.windows.1 (sandbox)");
   if (sub === "init"){
-    if (st.inited) return print("Reinitialized existing Git repository in /home/you/project/.git/");
-    st.inited = true; return print("Initialized empty Git repository in /home/you/project/.git/");
+    if (st.inited) return print("Reinitialized existing Git repository in C:/Users/you/project/.git/");
+    st.inited = true; return print("Initialized empty Git repository in C:/Users/you/project/.git/");
   }
   if (sub === "config") return print("(The sandbox doesn't need config. On your real computer, set user.name and user.email once.)", "d");
   needRepo();

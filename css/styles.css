@@ -131,7 +131,7 @@ tr:last-child td{border-bottom:0}
 .term .tbar{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #26303c;font:500 .74rem var(--f-mono);color:var(--term-dim)}
 .term .tbar button{font:inherit;background:#26303c;color:var(--term-ink);border:0;border-radius:5px;padding:4px 8px;cursor:pointer}
 .scroll{flex:1;overflow:auto;padding:12px 14px;font:.86rem/1.55 var(--f-mono);white-space:pre-wrap;word-break:break-word}
-.scroll .in{color:var(--term-ink)} .scroll .in::before{content:"you@laptop:~/project$ ";color:var(--term-green)}
+.scroll .in{color:var(--term-ink)} .scroll .in::before{content:"you@LAPTOP MINGW64 ~/project\A$ ";white-space:pre;color:var(--term-green)}
 .scroll .o{color:#c5cfd9} .scroll .e{color:var(--term-red)} .scroll .g{color:var(--term-green)} .scroll .y{color:var(--term-yellow)} .scroll .b{color:var(--term-blue)} .scroll .d{color:var(--term-dim)}
 .scroll .note{color:var(--term-dim);border-left:2px solid #3a4757;padding-left:10px;margin:4px 0 8px;font-family:var(--f-body);font-size:.85rem}
 .prompt{display:flex;align-items:center;gap:8px;border-top:1px solid #26303c;padding:10px 14px;font:.88rem var(--f-mono)}

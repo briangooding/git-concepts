@@ -1,8 +1,12 @@
 # Git Field Guide
 
-A hands-on web app for learning Git and GitHub. Every command is explained piece by piece and shows the output you should expect. Words with a dotted underline open a plain-language definition when you click them.
+A hands-on web app for learning Git and GitHub on Windows. Every command is explained piece by piece and shows the output you should expect. Words with a dotted underline open a plain-language definition when you click them.
 
 **Live site:** https://briangooding.github.io/git-concepts/
+
+## Audience
+
+Windows 10 and 11 users only. All instructions assume Git for Windows, with commands typed into Git Bash.
 
 ## What's inside
 

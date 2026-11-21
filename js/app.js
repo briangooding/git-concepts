@@ -29,10 +29,10 @@ const G = {
   "stash":["Stash","A shelf for uncommitted changes. git stash saves and removes them; git stash pop brings them back."],
   "revert":["Revert","Creating a new commit that undoes an earlier commit. Safe for shared history because it adds rather than removes."],
   "reset":["Reset","Moving a branch pointer back to an earlier commit. --soft keeps changes staged, --mixed keeps them unstaged, --hard deletes them. Avoid on pushed commits."],
-  "terminal":["Terminal (command line, shell)","A text window where you type commands. Terminal on Mac, Git Bash or PowerShell on Windows. The program reading your commands is the shell, often bash or zsh."],
+  "terminal":["Terminal (command line, shell)","A text window where you type commands instead of clicking. This guide uses Git Bash, which comes with Git for Windows. Windows also has PowerShell and Command Prompt, but some commands in this guide only work in Git Bash."],
   "flag":["Flag (option)","An extra setting added to a command, starting with - or --. Example: -m in git commit -m \"msg\". Short flags have one dash and one letter; long flags have two dashes and a word."],
-  "ssh":["SSH key","A pair of files (a private key kept on your computer, and a public key you give GitHub) that proves who you are without a password. Created with ssh-keygen -t ed25519."],
-  "pat":["Personal access token","A long password-like string generated in GitHub Settings → Developer settings, used instead of your password when Git asks for one over HTTPS."],
+  "ssh":["SSH key","A pair of files (a private key kept on your computer, and a public key you give GitHub) that proves who you are without a password. Created in Git Bash with ssh-keygen -t ed25519; the files go in C:\\Users\\you\\.ssh."],
+  "pat":["Personal access token","A long password-like string generated in GitHub Settings → Developer settings, used instead of your password when Git asks for one over HTTPS. On Windows, Git Credential Manager usually makes this unnecessary."],
   "ci":["CI (continuous integration)","Automated checks, like running tests, that run every time you push or open a PR. On GitHub this is usually GitHub Actions."],
   "switch":["Switch / checkout","Moving to a different branch, which changes your files to match it. git switch is the modern command; git checkout is the older one that also does other things."],
   "squash":["Squash","Combining several commits into one. GitHub's 'Squash and merge' does this when merging a PR."],
@@ -42,7 +42,7 @@ const G = {
 
 /* ---------------- Cheat sheet data ---------------- */
 const CHEAT = [
- ["Setup (once)", [["git config --global user.name \"Name\"","Set your name for commits"],["git config --global user.email \"you@x.com\"","Set your email for commits"],["git config --global init.defaultBranch main","Name new branches main"],["gh auth login","Log in to GitHub from the terminal"]]],
+ ["Setup (once)", [["git config --global user.name \"Name\"","Set your name for commits"],["git config --global user.email \"you@x.com\"","Set your email for commits"],["git config --global init.defaultBranch main","Name new branches main"],["git config --global core.editor \"code --wait\"","Use VS Code for commit messages"]]],
  ["Start", [["git init","Make the current folder a repository"],["git clone <url>","Download a repository from GitHub"]]],
  ["Daily loop", [["git status","Where are my changes?"],["git add <file>","Stage one file"],["git add .","Stage everything here"],["git commit -m \"msg\"","Save staged changes"],["git commit -am \"msg\"","Stage tracked changes and commit"]]],
  ["Look", [["git log --oneline","Short history"],["git log --oneline --graph --all","History of all branches as a graph"],["git diff","Unstaged changes"],["git diff --staged","What will be committed"],["git show <hash>","One commit in detail"]]],

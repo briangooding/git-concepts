@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Git Field Guide</title>
-<meta name="description" content="Learn Git and GitHub step by step: every command explained piece by piece, a clickable glossary, and a practice terminal that runs in your browser.">
+<meta name="description" content="Learn Git and GitHub on Windows step by step: every command explained piece by piece, a clickable glossary, and a practice terminal that runs in your browser.">
 <meta name="theme-color" content="#0d7568" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0f141a" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
@@ -25,7 +25,7 @@
 
 <div class="app">
 <nav class="rail" id="rail" aria-label="Chapters">
-  <p class="brand">Git Field Guide<small>git + github, step by step</small></p>
+  <p class="brand">Git Field Guide<small>git + github on windows</small></p>
   <div class="progress"><span id="progTxt">0 of 0 chapters done</span><div class="bar"><i id="progBar"></i></div></div>
   <ul class="nav" id="nav"></ul>
 </nav>
@@ -38,6 +38,7 @@
   <h1>Git is a save system for folders</h1>
   <p class="lede">Before any commands: learn the four places your work can live. Almost every confusing Git moment is just "my change is in a different place than I thought."</p>
 
+  <div class="tip"><b>Written for Windows.</b> Every instruction and screenshot of output assumes a Windows 10 or 11 PC, with commands typed into <b>Git Bash</b>, the terminal that comes with Git for Windows. Chapter 2 sets it up.</div>
   <p><b>Git</b> is a program on your computer. It watches one folder (a <button class="t" data-t="repository">repository</button>) and lets you take named snapshots of it called <button class="t" data-t="commit">commits</button>. You can go back to any snapshot, compare snapshots, and work on several versions at once using <button class="t" data-t="branch">branches</button>.</p>
   <p><b>GitHub</b> is a website that stores a copy of your repository online. It adds things Git doesn't have: a web page for your code, <button class="t" data-t="pull-request">pull requests</button>, issues, and permissions for teammates. Git works fine without GitHub. GitHub doesn't do much without Git.</p>
 
@@ -77,36 +78,60 @@
 <section class="ch" id="ch-setup" data-title="Install and set up" data-grp="Foundations">
   <div class="eyebrow">Chapter 2 · One-time setup</div>
   <h1>Install Git and tell it who you are</h1>
-  <p class="lede">You do this once per computer. It takes about ten minutes.</p>
-
-  <h2>First, the terminal</h2>
-  <p>Git is used by typing commands into a <button class="t" data-t="terminal">terminal</button>. On a Mac open <b>Terminal</b> (Cmd + Space, type "Terminal"). On Windows, install Git first (below) and use <b>Git Bash</b>, which it includes. On Linux, you already know where your terminal is.</p>
-  <div class="tbl"><table>
-    <tr><th>Command</th><th>What it does</th><th>Example</th></tr>
-    <tr><td><code>pwd</code></td><td>"Print working directory." Shows which folder you're in right now.</td><td><code>/Users/sam/projects</code></td></tr>
-    <tr><td><code>ls</code></td><td>Lists the files in the current folder. <code>ls -a</code> also shows hidden ones like <code>.git</code>.</td><td><code>notes.txt  photos</code></td></tr>
-    <tr><td><code>cd folder</code></td><td>"Change directory." Moves into a folder. <code>cd ..</code> goes up one level. <code>cd ~</code> goes home.</td><td><code>cd projects/blog</code></td></tr>
-    <tr><td><code>mkdir name</code></td><td>"Make directory." Creates a new folder.</td><td><code>mkdir my-site</code></td></tr>
-  </table></div>
-  <div class="tip"><b>Tip:</b> Press <kbd>Tab</kbd> to auto-complete file and folder names. Press <kbd>↑</kbd> to bring back your previous command.</div>
+  <p class="lede">You do this once per Windows PC. It takes about fifteen minutes.</p>
 
   <div class="steps">
     <div class="step">
-      <h3>Check whether Git is already installed</h3>
-      <div class="sh"><code>git --version</code></div>
-      <dl class="parts"><dt>git</dt><dd>Runs the Git program. Every Git command starts with this word.</dd><dt>--version</dt><dd>A <button class="t" data-t="flag">flag</button>. Flags start with dashes and change what a command does. This one just asks Git to print its version.</dd></dl>
-      <div class="out"><div class="lab">What you'll see</div><pre>git version 2.47.1</pre></div>
-      <p>If you see a version number, skip to Step 3. If you see "command not found," install it:</p>
-      <ul>
-        <li><b>Mac:</b> running <code>git --version</code> usually pops up an offer to install "Command Line Developer Tools." Click Install. Or, with Homebrew: <code>brew install git</code>.</li>
-        <li><b>Windows:</b> download "Git for Windows" from <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com/downloads</a>. The default options in the installer are fine.</li>
-        <li><b>Linux (Ubuntu/Debian):</b> <code>sudo apt install git</code></li>
-      </ul>
+      <h3>Download Git for Windows</h3>
+      <p>Go to <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">git-scm.com/downloads/win</a> and click <b>Click here to download</b>. That gets the 64-bit installer, which is right for almost every PC.</p>
+      <p>Or, if you're comfortable with PowerShell, install it with Windows' built-in package manager:</p>
+      <div class="sh"><code>winget install --id Git.Git -e</code></div>
+      <dl class="parts"><dt>winget</dt><dd>The Windows Package Manager, built into Windows 10 and 11. Run this one in <b>PowerShell</b>, not Git Bash (you don't have Git Bash yet).</dd><dt>install --id Git.Git</dt><dd>Install the package whose ID is <code>Git.Git</code>, the official Git for Windows.</dd><dt>-e</dt><dd>"Exact." Match that ID exactly, so winget doesn't pick a similarly named package.</dd></dl>
     </div>
 
     <div class="step">
-      <h3>Close and reopen the terminal, then check again</h3>
-      <p>A terminal that was open during installation sometimes can't find the new program. Open a fresh one and run <code>git --version</code> again. A version number means you're set.</p>
+      <h3>Run the installer</h3>
+      <p>Clicking <b>Next</b> through every screen works. Four screens are worth a second look:</p>
+      <div class="tbl"><table>
+        <tr><th>Screen</th><th>Pick</th><th>Why</th></tr>
+        <tr><td>Choosing the default editor used by Git</td><td><b>Use Visual Studio Code</b> if you have it, otherwise <b>Use Notepad</b></td><td>The default is Vim, which confuses almost everyone the first time. Git opens this editor when it needs you to type a message.</td></tr>
+        <tr><td>Adjusting the name of the initial branch</td><td><b>Override the default branch name</b> and type <code>main</code></td><td>GitHub calls its first branch <code>main</code>. Matching it avoids confusion later.</td></tr>
+        <tr><td>Adjusting your PATH environment</td><td>Keep <b>Git from the command line and also from 3rd-party software</b></td><td>Lets you use Git in PowerShell, VS Code and other apps too, not only in Git Bash.</td></tr>
+        <tr><td>Configuring the line ending conversions</td><td>Keep <b>Checkout Windows-style, commit Unix-style</b></td><td>Windows and Mac/Linux end lines differently. This setting stops that from showing up as fake changes when you work with others.</td></tr>
+      </table></div>
+      <p>Leave the credential helper on <b>Git Credential Manager</b> (the default). It handles signing in to GitHub for you, as you'll see in the last step.</p>
+    </div>
+
+    <div class="step">
+      <h3>Open Git Bash</h3>
+      <p>Press the <kbd>Windows</kbd> key, type <b>Git Bash</b>, and press <kbd>Enter</kbd>. A black window opens. This is your <button class="t" data-t="terminal">terminal</button>: you type a command, press <kbd>Enter</kbd>, and it prints a result.</p>
+      <div class="out"><div class="lab">What you'll see</div><pre>Sam@LAPTOP-4F2K MINGW64 ~
+$</pre></div>
+      <dl class="parts"><dt>Sam@LAPTOP-4F2K</dt><dd>Your Windows user name and your PC's name.</dd><dt>MINGW64</dt><dd>The name of the system that lets Git Bash run Linux-style commands on Windows. You can ignore it.</dd><dt>~</dt><dd>The folder you're in. <code>~</code> means your home folder, <code>C:\Users\Sam</code>.</dd><dt>$</dt><dd>The prompt. It means "ready, type a command."</dd></dl>
+      <div class="why"><b>Why Git Bash and not PowerShell or Command Prompt?</b> Git works in all three, but the other commands in this guide (<code>ls</code>, <code>pwd</code>, <code>echo "text" &gt; file</code>) behave differently or don't exist in Command Prompt, and the PowerShell built into Windows can save <code>echo</code> output in a format Git treats as binary gibberish. Use Git Bash for everything here and every command will work exactly as shown.</div>
+      <div class="tip"><b>Shortcuts:</b> in File Explorer, open any folder, right-click empty space, and choose <b>Open Git Bash here</b> (on Windows 11, first click <b>Show more options</b>). Git Bash opens already inside that folder. In VS Code, open the terminal with <kbd>Ctrl</kbd> + <kbd>`</kbd> and pick <b>Git Bash</b> from the <b>+ ▾</b> menu.</div>
+    </div>
+
+    <div class="step">
+      <h3>Learn five terminal commands</h3>
+      <p>These are not Git commands. They're for moving around folders, and you'll use them constantly.</p>
+      <div class="tbl"><table>
+        <tr><th>Command</th><th>What it does</th><th>Example</th></tr>
+        <tr><td><code>pwd</code></td><td>"Print working directory." Shows which folder you're in. Git Bash writes <code>C:\Users\Sam</code> as <code>/c/Users/Sam</code>: forward slashes, and the drive letter becomes <code>/c</code>.</td><td><code>/c/Users/Sam/projects</code></td></tr>
+        <tr><td><code>ls</code></td><td>Lists the files in the current folder. <code>ls -a</code> also shows hidden ones like <code>.git</code>.</td><td><code>notes.txt  photos/</code></td></tr>
+        <tr><td><code>cd folder</code></td><td>"Change directory." Moves into a folder. <code>cd ..</code> goes up one level. <code>cd ~</code> goes home. Put names with spaces in quotes: <code>cd "My Projects"</code>.</td><td><code>cd Documents/blog</code></td></tr>
+        <tr><td><code>mkdir name</code></td><td>"Make directory." Creates a new folder.</td><td><code>mkdir my-site</code></td></tr>
+        <tr><td><code>explorer .</code></td><td>Opens the current folder in File Explorer, so you can see the same files in the normal Windows way. The <code>.</code> means "this folder."</td><td><code>explorer .</code></td></tr>
+      </table></div>
+      <div class="tip"><b>Keyboard in Git Bash:</b> <kbd>Tab</kbd> auto-completes file and folder names. <kbd>↑</kbd> brings back your previous command. To paste, use <kbd>Shift</kbd> + <kbd>Insert</kbd> or right-click → <b>Paste</b>. <kbd>Ctrl</kbd> + <kbd>C</kbd> does <i>not</i> copy here: it stops whatever command is running. To copy, select text with the mouse (that copies it automatically).</div>
+    </div>
+
+    <div class="step">
+      <h3>Check that Git works</h3>
+      <div class="sh"><code>git --version</code></div>
+      <dl class="parts"><dt>git</dt><dd>Runs the Git program. Every Git command starts with this word.</dd><dt>--version</dt><dd>A <button class="t" data-t="flag">flag</button>. Flags start with dashes and change what a command does. This one just asks Git to print its version.</dd></dl>
+      <div class="out"><div class="lab">What you'll see</div><pre>git version 2.47.1.windows.1</pre></div>
+      <p>Any version number means you're set. If you see <code>command not found</code> or "'git' is not recognized," close every terminal window, open a new one, and try again. A window that was already open during installation can't see the new program.</p>
     </div>
 
     <div class="step">
@@ -114,7 +139,7 @@
       <p>Every commit records who made it. Git refuses to commit until you set this.</p>
       <div class="sh"><code>git config --global user.name "Sam Rivera"</code></div>
       <dl class="parts"><dt>config</dt><dd>The Git command for reading and changing settings.</dd><dt>--global</dt><dd>Save this setting for every repository on this computer, not just the current one.</dd><dt>user.name</dt><dd>The name of the setting.</dd><dt>"Sam Rivera"</dt><dd>The value. Quotes keep the space from splitting it into two words. Use your real name or a handle; it appears on every commit.</dd></dl>
-      <div class="out"><div class="lab">What you'll see</div><pre>(nothing — no output means it worked)</pre></div>
+      <div class="out"><div class="lab">What you'll see</div><pre>(nothing. No output means it worked.)</pre></div>
     </div>
 
     <div class="step">
@@ -125,9 +150,16 @@
     </div>
 
     <div class="step">
-      <h3>Name the default branch "main"</h3>
+      <h3>Name the default branch "main" (if you skipped it in the installer)</h3>
       <div class="sh"><code>git config --global init.defaultBranch main</code></div>
-      <dl class="parts"><dt>init.defaultBranch</dt><dd>The name Git gives the first branch in a new repository. Older Git versions use <code>master</code>; GitHub uses <code>main</code>. Matching them avoids confusion later.</dd></dl>
+      <dl class="parts"><dt>init.defaultBranch</dt><dd>The name Git gives the first branch in a new repository. Without this, Git uses <code>master</code>, while GitHub uses <code>main</code>. Running it again is harmless if you already picked <code>main</code> in the installer.</dd></dl>
+    </div>
+
+    <div class="step">
+      <h3>Make sure Git uses an editor you know</h3>
+      <p>Skip this if you picked VS Code or Notepad in the installer.</p>
+      <div class="sh"><code>git config --global core.editor "code --wait"</code></div>
+      <dl class="parts"><dt>core.editor</dt><dd>The program Git opens when it needs you to type something longer, such as a commit message when you forget <code>-m</code>.</dd><dt>"code --wait"</dt><dd>Use VS Code, and <code>--wait</code> tells Git to wait until you close that tab. No VS Code? Use <code>"notepad"</code> instead.</dd></dl>
     </div>
 
     <div class="step">
@@ -135,21 +167,17 @@
       <div class="sh"><code>git config --global --list</code></div>
       <div class="out"><div class="lab">What you'll see</div><pre>user.name=Sam Rivera
 user.email=sam@example.com
-init.defaultbranch=main</pre></div>
+init.defaultbranch=main
+core.editor=code --wait</pre></div>
     </div>
 
     <div class="step">
-      <h3>Create a GitHub account and log in from the terminal</h3>
-      <p>Sign up at <a href="https://github.com/signup" target="_blank" rel="noopener">github.com</a>. Then your computer needs permission to push to it. <b>Your GitHub password will not work in the terminal</b>; GitHub stopped accepting it in 2021. The simplest fix is the official GitHub CLI tool:</p>
-      <ul>
-        <li>Mac: <code>brew install gh</code> · Windows: <code>winget install GitHub.cli</code> · Linux: see <a href="https://cli.github.com" target="_blank" rel="noopener">cli.github.com</a></li>
-      </ul>
-      <div class="sh"><code>gh auth login</code></div>
-      <dl class="parts"><dt>gh</dt><dd>The GitHub CLI, a separate program from <code>git</code> made by GitHub.</dd><dt>auth login</dt><dd>Starts a login. Choose <b>GitHub.com</b>, then <b>HTTPS</b>, then <b>Yes</b> to "authenticate Git with your credentials," then <b>Login with a web browser</b>. Copy the code it shows, paste it in the browser page.</dd></dl>
-      <div class="out"><div class="lab">What you'll see at the end</div><pre>✓ Authentication complete.
-✓ Configured git protocol
-✓ Logged in as samrivera</pre></div>
-      <p>From now on <code>git push</code> just works. The alternatives are an <button class="t" data-t="ssh">SSH key</button> or a <button class="t" data-t="pat">personal access token</button>; both work, but take more steps.</p>
+      <h3>Create a GitHub account</h3>
+      <p>Sign up at <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a>. That's all for now. You don't need to sign in from Git Bash yet.</p>
+      <p><b>How signing in works on Windows:</b> the first time you <code>git push</code> or <code>git clone</code> a private repository, <b>Git Credential Manager</b> (installed with Git) opens a small window. Click <b>Sign in with your browser</b>, approve the request on the GitHub page that opens, and you're done. Windows stores the login in <b>Credential Manager</b>, so you won't be asked again.</p>
+      <div class="warn"><b>Don't type your GitHub password into Git Bash.</b> If Git ever asks for a username and password in the terminal itself, the password won't work: GitHub stopped accepting passwords there in 2021. That prompt means Git Credential Manager isn't set up. Fix it by running <code>git config --global credential.helper manager</code>, then push again.</div>
+      <div class="tip"><b>Signed in as the wrong GitHub account?</b> Press the <kbd>Windows</kbd> key, open <b>Credential Manager</b> → <b>Windows Credentials</b>, remove the entry starting with <code>git:https://github.com</code>, and push again to sign in fresh.</div>
+      <p>Optional: the <b>GitHub CLI</b> (<code>gh</code>) lets you do GitHub things like opening pull requests from the terminal. Install it in PowerShell with <code>winget install --id GitHub.cli -e</code>, then run <code>gh auth login</code> in a new Git Bash window. Other ways to sign in are an <button class="t" data-t="ssh">SSH key</button> or a <button class="t" data-t="pat">personal access token</button>; both work, but take more steps.</p>
     </div>
   </div>
 </section>
@@ -166,14 +194,16 @@ init.defaultbranch=main</pre></div>
       <h3>Make a folder and move into it</h3>
       <div class="sh"><code>mkdir my-project</code></div>
       <div class="sh"><code>cd my-project</code></div>
-      <p>Git works on whichever folder your terminal is in. Being in the wrong folder is the #1 beginner mistake. Run <code>pwd</code> if you're unsure.</p>
+      <p>Git works on whichever folder your terminal is in. Being in the wrong folder is the #1 beginner mistake. Run <code>pwd</code> if you're unsure. A good home for projects is a folder like <code>C:\Users\Sam\projects</code>: in Git Bash, <code>mkdir ~/projects</code> once, then <code>cd ~/projects</code> before creating each project.</p>
     </div>
     <div class="step">
       <h3>Turn it into a repository</h3>
       <div class="sh"><code>git init</code></div>
       <dl class="parts"><dt>init</dt><dd>"Initialize." Creates a hidden folder called <code>.git</code> inside the current folder. That hidden folder <i>is</i> the repository: all commits, branches, and settings live there.</dd></dl>
-      <div class="out"><div class="lab">What you'll see</div><pre>Initialized empty Git repository in /Users/sam/my-project/.git/</pre></div>
-      <div class="warn"><b>Don't</b> run <code>git init</code> in your home folder or Desktop. It would make Git track everything there. If you did it by accident, delete the <code>.git</code> folder that it created (<code>rm -rf .git</code> in that folder) and nothing else is affected.</div>
+      <div class="out"><div class="lab">What you'll see</div><pre>Initialized empty Git repository in C:/Users/Sam/projects/my-project/.git/</pre></div>
+      <p>You won't see <code>.git</code> in File Explorer because it's hidden. To show it: File Explorer → <b>View</b> → <b>Show</b> → <b>Hidden items</b> (on Windows 10: <b>View</b> tab → tick <b>Hidden items</b>). Don't edit anything inside it by hand.</p>
+      <div class="warn"><b>Don't</b> run <code>git init</code> in your home folder (<code>C:\Users\Sam</code>), Desktop, Documents, or OneDrive. It would make Git track everything there. If you did it by accident, delete the <code>.git</code> folder that it created (<code>rm -rf .git</code> in that folder) and nothing else is affected.</div>
+      <div class="why"><b>Avoid OneDrive folders.</b> If your Documents or Desktop syncs to OneDrive, keep repositories somewhere else, like <code>C:\Users\Sam\projects</code>. OneDrive syncing files inside <code>.git</code> while Git is writing them can corrupt the repository.</div>
     </div>
     <div class="step">
       <h3>Confirm it worked</h3>
@@ -248,6 +278,7 @@ nothing added to commit but untracked files present</pre></div>
       <div class="out"><div class="lab">What you'll see</div><pre>Changes to be committed:
   (use "git rm --cached &lt;file&gt;..." to unstage)
 	new file:   notes.txt</pre></div>
+      <div class="why"><b>Seeing "LF will be replaced by CRLF"?</b> Git on Windows may print <code>warning: in the working copy of 'notes.txt', LF will be replaced by CRLF the next time Git touches it</code>. It's harmless. Windows and Mac/Linux end lines with different invisible characters, and Git is telling you it's converting them so the file looks right on everyone's computer.</div>
       <div class="tip"><b>Shortcuts:</b> <code>git add .</code> stages every change in the current folder and below. Handy, but run <code>git status</code> first so you don't stage something you didn't mean to. <code>git add -p</code> walks you through each changed chunk and asks yes/no, which is great for committing only part of a file.</div>
       <div class="why"><b>Important:</b> <code>git add</code> stages the file <i>as it is right now</i>. If you edit it again afterward, the new edit isn't staged. <code>git status</code> will show the file in both "to be committed" and "not staged" lists. Just <code>git add</code> it again.</div>
     </div>
@@ -260,7 +291,7 @@ nothing added to commit but untracked files present</pre></div>
  1 file changed, 1 insertion(+)
  create mode 100644 notes.txt</pre></div>
       <p>Reading that output: <code>main</code> is the branch, <code>root-commit</code> means it's the very first commit, and <code>3f9a2c1</code> is the short <button class="t" data-t="hash">hash</button>, this commit's ID.</p>
-      <div class="warn"><b>Forgot <code>-m</code>?</b> Git opens a text editor (often Vim) for you to type the message. To get out of Vim: press <kbd>i</kbd>, type your message, press <kbd>Esc</kbd>, type <code>:wq</code>, press <kbd>Enter</kbd>. To avoid it entirely: <code>git config --global core.editor "nano"</code>, or <code>"code --wait"</code> for VS Code.</div>
+      <div class="warn"><b>Forgot <code>-m</code>?</b> Git opens a text editor (often Vim) for you to type the message. If you set VS Code or Notepad in setup, it opens there: type the message on the first line, save, and close the tab or window. If you're stuck in Vim (a black screen with <code>~</code> down the side): press <kbd>i</kbd>, type your message, press <kbd>Esc</kbd>, type <code>:wq</code>, press <kbd>Enter</kbd>. Then set a friendlier editor (see <a href="#setup">setup</a>).</div>
     </div>
 
     <div class="step">
@@ -672,9 +703,9 @@ venv/
 dist/
 build/
 
-# OS and editor junk
-.DS_Store
+# Windows and editor junk
 Thumbs.db
+desktop.ini
 .vscode/</pre></div>
       <dl class="parts"><dt>.env</dt><dd>An exact file name, ignored in any folder.</dd><dt>*.pem</dt><dd><code>*</code> matches anything, so: every file ending in <code>.pem</code>.</dd><dt>node_modules/</dt><dd>A trailing slash means a folder and everything in it.</dd><dt># …</dt><dd>Lines starting with <code>#</code> are comments.</dd></dl>
       <p>Commit the <code>.gitignore</code> itself so your teammates get the same rules. GitHub keeps templates for most languages at <a href="https://github.com/github/gitignore" target="_blank" rel="noopener">github.com/github/gitignore</a>.</p>
